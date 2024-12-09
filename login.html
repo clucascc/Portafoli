@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Colegio DR. Ernesto Guevara</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script src="js/auth.js" defer></script>
+</head>
+<body>
+    <div id="login-container" class="login-container">
+        <div id="login-section">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm" action="/login" method="POST" novalidate>
+                <!-- Nombre de Usuario -->
+                <div class="input-group">
+                    <i class="bx bx-user input-icon"></i>
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" name="username" placeholder="Tu usuario" required>
+                </div>
+
+                <!-- Correo Electrónico -->
+                <div class="input-group">
+                    <i class="bx bxs-envelope input-icon"></i>
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+                </div>
+            
+                <!-- Contraseña -->
+                <div class="input-group">
+                    <i class="bx bx-lock input-icon"></i>
+                    <label for="password">Contraseña:</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                        <button type="button" id="togglePassword" class="password-toggle" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+                    </div>
+                </div>
+            
+                <!-- Selección de Rol -->
+                <div class="input-group">
+                    <label for="role">Rol:</label>
+                    <select id="role" name="role" required>
+                        <option value="" disabled selected>Selecciona tu rol</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="profesor">Profesor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            
+                <!-- Botón de Envío -->
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+                <p id="error-message" class="error-message"></p>
+            </form>
+            <p class="switch-form">¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+        </div>
+
+        <div id="register-section" style="display: none;">
+            <h2>Registro de Usuario</h2>
+            <form id="registerForm" novalidate>
+                <!-- Nombre de Usuario -->
+                <div class="input-group">
+                    <i class="bx bx-user input-icon"></i>
+                    <label for="regUsername">Nombre de Usuario:</label>
+                    <input type="text" id="regUsername" name="username" placeholder="Tu usuario" required>
+                </div>
+
+                <!-- Nombre -->
+                <div class="input-group">
+                    <i class="bx bx-user input-icon"></i>
+                    <label for="regNombre">Nombre:</label>
+                    <input type="text" id="regNombre" name="nombre" placeholder="Tu nombre" required>
+                </div>
+
+                <!-- Apellido -->
+                <div class="input-group">
+                    <i class="bx bx-user input-icon"></i>
+                    <label for="regApellido">Apellido:</label>
+                    <input type="text" id="regApellido" name="apellido" placeholder="Tu apellido" required>
+                </div>
+
+                <!-- Correo Electrónico -->
+                <div class="input-group">
+                    <i class="bx bxs-envelope input-icon"></i>
+                    <label for="regEmail">Correo Electrónico:</label>
+                    <input type="email" id="regEmail" name="email" placeholder="example@domain.com" required>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="input-group">
+                    <i class="bx bx-lock input-icon"></i>
+                    <label for="regPassword">Contraseña:</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regPassword" name=" password" placeholder="Crea tu contraseña" required>
+                        <button type="button" id="toggleRegPassword" class="password-toggle" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+                    </div>
+                </div>
+
+                <!-- Selección de Rol -->
+                <div class="input-group">
+                    <label for="regRole">Rol:</label>
+                    <select id="regRole" name="role" required>
+                        <option value="" disabled selected>Selecciona tu rol</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="profesor">Profesor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <!-- Botón de Registro -->
+                <button type="submit" class="login-btn">Registrarse</button>
+                <p id="reg-error-message" class="error-message"></p>
+            </form>
+            <p class="switch-form">¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

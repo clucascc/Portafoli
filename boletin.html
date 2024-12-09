@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletín de Notas - Colegio DR. Ernesto Guevara</title>
+    <link rel="stylesheet" href="css/Boletín.css">
+</head>
+<body>
+
+<div class="report-card-container">
+    <h2>Boletín de Notas</h2>
+
+    <div class="student-info">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" class="student-input" placeholder="Ingrese el nombre del estudiante">
+        
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" class="student-input" placeholder="Ingrese el apellido del estudiante">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Asignatura</th>
+                <th>Primer Trimestre</th>
+                <th>Segundo Trimestre</th>
+                <th>Tercer Trimestre</th>
+                <th>Comentario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-materia-id="1">
+                <td>Matemáticas</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="2">
+                <td>Inglés</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="3">
+                <td>Autogestión</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="4">
+                <td>Hardware</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="5">
+                <td>Programación</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="6">
+                <td>Asistencia</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="7">
+                <td>Marco Jurídico</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="8">
+                <td>Redes</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+            <tr data-materia-id="9">
+                <td>Prácticas</td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="number" min="0" max="10" step="0.1" class="grade-input"></td>
+                <td><input type="text" class="comment-input"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><strong>Promedio</strong></td>
+                <td id="promedio1">-</td>
+                <td id="promedio2">-</td>
+                <td id="promedio3">-</td>
+                <td>Promedio Final: <span id="promedioFinal">-</span></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="buttons-container">
+        <button onclick="calcularPromedios()" class="action-button">Calcular Promedios</button>
+        <button onclick="guardarNotas()" class="action-button">Guardar Notas</button>
+        <button onclick="cargarNotas()" class="action-button">Cargar Notas</button>
+        <button onclick="window.print()" class="action-button">Imprimir Boletín</button>
+    </div>
+
+    <script>
+        function calcularPromedios() {
+            const filas = document.querySelectorAll('tbody tr');
+            let sumas = [0, 0, 0];
+            let contadores = [0, 0, 0];
+            
+            filas.forEach(fila => {
+                const notas = fila.querySelectorAll('.grade-input');
+                notas.forEach((nota, index) => {
+                    if (nota.value !== '') {
+                        sumas[index] += parseFloat(nota.value);
+                        contadores[index]++;
+                    }
+                });
+            });
+
+            // Calcular promedios por trimestre
+            const promedios = sumas.map((suma, index) => 
+                contadores[index] > 0 ? (suma / contadores[index]).toFixed(2) : '-'
+            );
+
+            // Mostrar promedios
+            document.getElementById('promedio1').textContent = promedios[0];
+            document.getElementById('promedio2').textContent = promedios[1];
+            document.getElementById('promedio3').textContent = promedios[2];
+
+            // Calcular promedio final
+            const promedioFinal = promedios
+                .filter(p => p !== '-')
+                .map(p => parseFloat(p))
+                .reduce((a, b) => a + b, 0) / promedios.filter(p => p !== '-').length;
+
+            document.getElementById('promedioFinal').textContent = 
+                isNaN(promedioFinal) ? '-' : promedioFinal.toFixed(2);
+        }
+
+        async function guardarNotas() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            
+            if (!nombre || !apellido) {
+                alert('Por favor, ingrese el nombre y apellido del estudiante');
+                return;
+            }
+
+            try {
+                // Primero obtener el ID del estudiante
+                const responseEstudiante = await fetch(`http://localhost:3001/api/notas/buscar?nombre=${encodeURIComponent(nombre + ' ' + apellido)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                const dataEstudiante = await responseEstudiante.json();
+                
+                if (!dataEstudiante.success || !dataEstudiante.estudiante) {
+                    alert('No se encontró el estudiante en el sistema');
+                    return;
+                }
+
+                const alumnoId = dataEstudiante.estudiante.id;
+
+                // Validar que al menos una nota esté ingresada
+                let hayNotas = false;
+                const filas = document.querySelectorAll('tbody tr');
+                const notas = [];
+
+                filas.forEach(fila => {
+                    const materiaId = fila.getAttribute('data-materia-id'); // Asegúrate de que cada fila tenga este atributo
+                    const inputs = fila.querySelectorAll('.grade-input');
+
+                    // Validar que las notas estén entre 0 y 10
+                    const primer_trimestre = inputs[0].value ? parseFloat(inputs[0].value) : null;
+                    const segundo_trimestre = inputs[1].value ? parseFloat(inputs[1].value) : null;
+                    const tercer_trimestre = inputs[2].value ? parseFloat(inputs[2].value) : null;
+
+                    if (primer_trimestre !== null || segundo_trimestre !== null || tercer_trimestre !== null) {
+                        hayNotas = true;
+                    }
+
+                    // Validar rango de notas
+                    if ((primer_trimestre !== null && (primer_trimestre < 0 || primer_trimestre > 10)) ||
+                        (segundo_trimestre !== null && (segundo_trimestre < 0 || segundo_trimestre > 10)) ||
+                        (tercer_trimestre !== null && (tercer_trimestre < 0 || tercer_trimestre > 10))) {
+                        alert('Las notas deben estar entre 0 y 10');
+                        return;
+                    }
+
+                    // Agregar cada trimestre como una nota separada
+                    if (primer_trimestre !== null) {
+                        notas.push({
+                            alumnoId: alumnoId,
+                            materiaId: materiaId,
+                            nota: primer_trimestre,
+                            periodo: 1
+                        });
+                    }
+                    if (segundo_trimestre !== null) {
+                        notas.push({
+                            alumnoId: alumnoId,
+                            materiaId: materiaId,
+                            nota: segundo_trimestre,
+                            periodo: 2
+                        });
+                    }
+                    if (tercer_trimestre !== null) {
+                        notas.push({
+                            alumnoId: alumnoId,
+                            materiaId: materiaId,
+                            nota: tercer_trimestre,
+                            periodo: 3
+                        });
+                    }
+                });
+
+                if (!hayNotas) {
+                    alert('Por favor, ingrese al menos una nota');
+                    return;
+                }
+
+                console.log('Enviando notas:', notas); // Para depuración
+
+                const response = await fetch('http://localhost:3001/api/notas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(notas)
+                });
+
+                const data = await response.json();
+                console.log('Respuesta del servidor:', data);
+
+                if (response.ok && data.success) {
+                    alert('Las notas se han guardado correctamente');
+                    // Mostrar los datos guardados
+                    mostrarNotasGuardadas(notas);
+                } else {
+                    alert('Error: ' + (data.message || 'No se pudieron guardar las notas'));
+                }
+            } catch (error) {
+                console.error('Error al guardar:', error);
+                alert('Error de conexión: No se pudieron guardar las notas. Por favor, verifique su conexión e intente nuevamente.');
+            }
+        }
+
+        async function cargarNotas() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+
+            if (!nombre && !apellido) {
+                alert('Por favor, ingrese el nombre o apellido del estudiante para buscar');
+                return;
+            }
+
+            const nombreCompleto = `${nombre} ${apellido}`.trim();
+            console.log('Buscando notas para:', nombreCompleto);
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/notas/buscar?nombre=${encodeURIComponent(nombreCompleto)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    if (data.notas && data.notas.length > 0) {
+                        mostrarNotasGuardadas(data.notas);
+                    } else {
+                        alert('No se encontraron notas para este estudiante');
+                    }
+                } else {
+                    alert('Error: ' + (data.message || 'No se pudieron cargar las notas'));
+                }
+            } catch (error) {
+                console.error('Error al cargar:', error);
+                alert('Error de conexión: No se pudieron cargar las notas. Por favor, verifique su conexión e intente nuevamente.');
+            }
+        }
+
+        function mostrarNotasGuardadas(notas) {
+            // Agrupar las notas por materia
+            const notasPorMateria = {};
+            notas.forEach(nota => {
+                const materiaId = nota.materiaId;
+                if (!notasPorMateria[materiaId]) {
+                    notasPorMateria[materiaId] = {
+                        primer_trimestre: null,
+                        segundo_trimestre: null,
+                        tercer_trimestre: null
+                    };
+                }
+                switch (nota.periodo) {
+                    case 1:
+                        notasPorMateria[materiaId].primer_trimestre = nota.nota;
+                        break;
+                    case 2:
+                        notasPorMateria[materiaId].segundo_trimestre = nota.nota;
+                        break;
+                    case 3:
+                        notasPorMateria[materiaId].tercer_trimestre = nota.nota;
+                        break;
+                }
+            });
+
+            // Crear la tabla de notas guardadas
+            let tabla = '<div class="saved-grades">';
+            tabla += '<h3>Notas Guardadas</h3>';
+            tabla += '<table>';
+            tabla += '<thead><tr><th>Materia</th><th>1er Trimestre</th><th>2do Trimestre</th><th>3er Trimestre</th></tr></thead>';
+            tabla += '<tbody>';
+
+            // Agregar cada materia a la tabla
+            Object.entries(notasPorMateria).forEach(([materiaId, notas]) => {
+                const fila = document.querySelector(`tr[data-materia-id="${materiaId}"]`);
+                const nombreMateria = fila ? fila.querySelector('td:first-child').textContent : 'Materia Desconocida';
+                
+                tabla += '<tr>';
+                tabla += `<td>${nombreMateria}</td>`;
+                tabla += `<td>${notas.primer_trimestre !== null ? notas.primer_trimestre : '-'}</td>`;
+                tabla += `<td>${notas.segundo_trimestre !== null ? notas.segundo_trimestre : '-'}</td>`;
+                tabla += `<td>${notas.tercer_trimestre !== null ? notas.tercer_trimestre : '-'}</td>`;
+                tabla += '</tr>';
+            });
+
+            tabla += '</tbody></table></div>';
+
+            // Mostrar la tabla en el contenedor
+            const contenedor = document.getElementById('saved-grades-container');
+            if (!contenedor) {
+                const nuevoContenedor = document.createElement('div');
+                nuevoContenedor.id = 'saved-grades-container';
+                document.querySelector('.report-card-container').appendChild(nuevoContenedor);
+            }
+            document.getElementById('saved-grades-container').innerHTML = tabla;
+        }
+    </script>
+
+    <style>
+        .saved-grades {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .tabla-notas-guardadas {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .tabla-notas-guardadas th,
+        .tabla-notas-guardadas td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .tabla-notas-guardadas th {
+            background-color: #f5f5f5;
+        }
+
+        .estudiante-notas {
+            margin-bottom: 20px;
+        }
+
+        .estudiante-notas h4 {
+            margin: 10px 0;
+            color: #333;
+        }
+    </style>
+</div>
+
+</body>
+</html>
